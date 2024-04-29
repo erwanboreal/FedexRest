@@ -15,6 +15,7 @@ class PickupAvailability extends AbstractRequest {
     protected array $carriers = [];
     protected string $countryRelationship = '';
     protected string $dispatchDate = '';
+    protected string $customerCloseTime = '';
 
     /**
      * @return string
@@ -60,6 +61,15 @@ class PickupAvailability extends AbstractRequest {
     }
 
     /**
+     * @param string $customerCloseTime
+     * @return $this
+     */
+    public function setCustomerCloseTime(string $customerCloseTime): PickupAvailability {
+        $this->customerCloseTime = $customerCloseTime;
+        return $this;
+    }
+
+    /**
      * @param Address $pickupAddress
      * @return $this
      */
@@ -82,7 +92,8 @@ class PickupAvailability extends AbstractRequest {
                     'pickupRequestType' => $this->pickupRequestType,
                     'carriers' => $this->carriers,
                     'countryRelationship' => $this->countryRelationship,
-                    'dispatchDate' => $this->dispatchDate
+                    'dispatchDate' => $this->dispatchDate,
+                    'customerCloseTime' => $this->customerCloseTime
                 ]
             ]);
             return ($this->raw === true) ? $query : json_decode($query->getBody()->getContents());
