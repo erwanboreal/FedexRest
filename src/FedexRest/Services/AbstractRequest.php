@@ -65,7 +65,8 @@ abstract class AbstractRequest implements RequestInterface
         $this->http_client = new Client([
             'headers' => [
                 'Authorization' => "Bearer {$this->access_token}",
-                'Content-Type' => 'application/json'
+                'Content-Type' => 'application/json',
+                'X-locale' => 'fr_FR'
             ],
         ]);
     }
