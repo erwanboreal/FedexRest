@@ -21,7 +21,7 @@ class PickupAvailability extends AbstractRequest {
      * @return string
      */
     public function setApiEndpoint(): string {
-        return '/pickup/v1/pickups';
+        return '/pickup/v1/pickups/availabilities';
     }
 
     /**
