@@ -6,6 +6,7 @@ class ShipmentSpecialServices
 {
     public ?array $specialServiceTypes;
     public ?array $returnShipmentDetails;
+    public ?array $etdDetail;
 
     /**
      * @param array  $specialServiceTypes
@@ -26,6 +27,16 @@ class ShipmentSpecialServices
         $this->returnShipmentDetails = $returnShipmentDetails;
         return $this;
     }
+    /**
+     * @param array  $etdDetail
+     * @return $this
+     */
+    public function setEtdDetail(array $etdDetail): ShipmentSpecialServices
+    {
+        $this->etdDetail = $etdDetail;
+        return $this;
+    }
+
 
     public function prepare(): array
     {
@@ -35,6 +46,9 @@ class ShipmentSpecialServices
         }
         if (!empty($this->specialServiceTypes)) {
             $data['specialServiceTypes'] = $this->specialServiceTypes;
+        }
+        if(!empty($this->etdDetail)) {
+            $data['etdDetail'] = $this->etdDetail;
         }
         return $data;
     }
