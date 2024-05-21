@@ -44,6 +44,7 @@ class CreateShipment extends AbstractRequest
     protected Value $totalCustomsValue;
     protected array $commodities;
     protected array $commercialInvoice;
+    protected array $shippingDocs;
 
     /**
      * {@inheritDoc}
@@ -118,6 +119,23 @@ class CreateShipment extends AbstractRequest
     public function getServiceType(): string
     {
         return $this->serviceType;
+    }
+
+    /**
+     * @param array $shippingDocs
+     * @return $this
+     */
+    public function setShippingDocumentSpecification(array $shippingDocs): CreateShipment {
+        $this->shippingDocs = $shippingDocs;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getShippingDocumentSpecification(): array
+    {
+        return $this->shippingDocs;
     }
 
     /**
@@ -572,6 +590,9 @@ class CreateShipment extends AbstractRequest
         }
         if(!empty($this->commercialInvoice)) {
             $data['customsClearanceDetail']['commercialInvoice'] = $this->commercialInvoice;
+        }
+        if(!empty($this->shippingDocs)) {
+            $data['shippingDocumentSpecification'] = $this->shippingDocs;
         }
         return $data;
     }
