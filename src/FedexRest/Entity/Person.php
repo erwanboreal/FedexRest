@@ -10,6 +10,8 @@ class Person
     public string $personName = '';
     public string $phoneNumber;
     public string $companyName = '';
+    public string $email = '';
+    public ?string $taxId = null;
 
     /**
      * @param  mixed  $address
@@ -43,12 +45,31 @@ class Person
     }
 
     /**
+     * @param  string  $email
+     * @return $this
+     */
+    public function setEmail(string $email)
+    {
+        $this->email = $email;
+        return $this;
+    }
+
+    /**
      * @param  string  $companyName
      * @return $this
      */
     public function setCompanyName(string $companyName)
     {
         $this->companyName = $companyName;
+        return $this;
+    }
+
+    /**
+     * @param string|null $taxId
+     * @return $this
+     */
+    public function setTaxId(?string $taxId) {
+        $this->taxId = $taxId;
         return $this;
     }
 
@@ -67,9 +88,16 @@ class Person
         if (!empty($this->companyName)) {
             $data['contact']['companyName'] = $this->companyName;
         }
+        if (!empty($this->email)) {
+            $data['contact']['emailAddress'] = $this->email;
+        }
 
         if ($this->address != null) {
             $data['address'] = $this->address->prepare();
+        }
+
+        if(!empty($this->taxId)){
+            $data['tins']['number'] = $this->taxId;
         }
         return $data;
     }
