@@ -41,6 +41,8 @@ class CreateShipment extends AbstractRequest
     protected bool $oneLabelAtATime = FALSE;
     protected string $preferredCurrency = '';
     protected int $totalPackageCount;
+    protected Value $totalCustomsValue;
+    protected array $commodities;
 
     /**
      * {@inheritDoc}
@@ -326,6 +328,43 @@ class CreateShipment extends AbstractRequest
     }
 
     /**
+     * @param  \FedexRest\Services\Ship\Entity\Value  $totalCustomsValue
+     *
+     * @return $this
+     */
+    public function setTotalCustomsValue(Value $totalCustomsValue): CreateShipment
+    {
+        $this->totalCustomsValue = $totalCustomsValue;
+        return $this;
+    }
+
+    /**
+     * @return \FedexRest\Services\Ship\Entity\Value
+     */
+    public function getTotalCustomsValue(): Value
+    {
+        return $this->totalCustomsValue;
+    }
+
+    /**
+     * @param array $commodities
+     * @return $this
+     */
+    public function setCommodities(array $commodities): CreateShipment
+    {
+        $this->commodities = $commodities;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCommodities(): array
+    {
+        return $this->commodities;
+    }
+
+    /**
      * @param  string  $recipientLocationNumber
      * @return $this
      */
@@ -503,6 +542,13 @@ class CreateShipment extends AbstractRequest
         }
         if (!empty($this->totalPackageCount)) {
             $data['totalPackageCount'] = $this->totalPackageCount;
+        }
+        if(!empty($this->totalCustomsValue)) {
+            $data['customsClearanceDetail']['totalCustomsValue'] = $this->totalCustomsValue->prepare();
+            $data['customsClearanceDetail']['dutiesPayment'] = ["paymentType" => "SENDER"];
+        }
+        if(!empty($this->commodities)) {
+            $data['customsClearanceDetail']['commodities'] = $this->commodities;
         }
         return $data;
     }
