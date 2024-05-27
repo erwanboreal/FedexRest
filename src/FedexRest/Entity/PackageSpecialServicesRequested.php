@@ -5,66 +5,81 @@ namespace FedexRest\Entity;
 class PackageSpecialServicesRequested
 {
 
-  public array $specialServiceTypes;
-  public ?DangerousGoodsDetail $dangerousGoodsDetail;
-  public ?Weight $dryIceWeight;
+    public array $specialServiceTypes;
+    public ?DangerousGoodsDetail $dangerousGoodsDetail;
+    public ?Weight $dryIceWeight;
+    public string $signatureOptionType;
 
-  /**
-   * @param array $specialServiceTypes
-   * @return $this
-   */
-  public function setSpecialServiceTypes(array $specialServiceTypes): PackageSpecialServicesRequested
-  {
-    $this->specialServiceTypes = $specialServiceTypes;
-    return $this;
-  }
-
-  /**
-   * @param string $specialServiceType
-   * @return $this
-   */
-  public function addToSpecialServiceTypes(string $specialServiceType): PackageSpecialServicesRequested
-  {
-    $this->specialServiceTypes[] = $specialServiceType;
-    return $this;
-  }
-
-  /**
-   * @param ?DangerousGoodsDetail $dangerousGoodsDetail
-   * @return $this
-   */
-  public function setDangerousGoodsDetail(?DangerousGoodsDetail $dangerousGoodsDetail): PackageSpecialServicesRequested
-  {
-    $this->dangerousGoodsDetail = $dangerousGoodsDetail;
-    return $this;
-  }
-
-  /**
-   * @param ?Weight $dryIceWeight
-   * @return $this
-   */
-  public function setDryIceWeight(?Weight $dryIceWeight): PackageSpecialServicesRequested
-  {
-    $this->dryIceWeight = $dryIceWeight;
-    return $this;
-  }
-
-  public function prepare(): array {
-    $data = [];
-
-    if (!empty($this->setSpecialServiceTypes)) {
-      $data['specialServiceTypes'] = $this->setSpecialServiceTypes;
+    /**
+     * @param array $specialServiceTypes
+     * @return $this
+     */
+    public function setSpecialServiceTypes(array $specialServiceTypes): PackageSpecialServicesRequested
+    {
+        $this->specialServiceTypes = $specialServiceTypes;
+        return $this;
     }
 
-    if (!empty($this->dangerousGoodsDetail)) {
-      $data['dangerousGoodsDetail'] = $this->dangerousGoodsDetail->prepare();
+    /**
+     * @param array $signatureOptionType
+     * @return $this
+     */
+    public function setSignatureOptionType(string $signatureOptionType): PackageSpecialServicesRequested
+    {
+        $this->signatureOptionType = $signatureOptionType;
+        return $this;
     }
 
-    if (!empty($this->dryIceWeight)) {
-      $data['dryIceWeight'] = $this->dryIceWeight->prepare();
+    /**
+     * @param string $specialServiceType
+     * @return $this
+     */
+    public function addToSpecialServiceTypes(string $specialServiceType): PackageSpecialServicesRequested
+    {
+        $this->specialServiceTypes[] = $specialServiceType;
+        return $this;
     }
 
-    return $data;
-  }
+    /**
+     * @param ?DangerousGoodsDetail $dangerousGoodsDetail
+     * @return $this
+     */
+    public function setDangerousGoodsDetail(?DangerousGoodsDetail $dangerousGoodsDetail): PackageSpecialServicesRequested
+    {
+        $this->dangerousGoodsDetail = $dangerousGoodsDetail;
+        return $this;
+    }
+
+    /**
+     * @param ?Weight $dryIceWeight
+     * @return $this
+     */
+    public function setDryIceWeight(?Weight $dryIceWeight): PackageSpecialServicesRequested
+    {
+        $this->dryIceWeight = $dryIceWeight;
+        return $this;
+    }
+
+    public function prepare(): array {
+        $data = [];
+
+        if (!empty($this->setSpecialServiceTypes)) {
+            $data['specialServiceTypes'] = $this->setSpecialServiceTypes;
+        }
+
+        if (!empty($this->signatureOptionType)) {
+            $data['signatureOptionType'] = $this->signatureOptionType;
+        }
+
+        if (!empty($this->dangerousGoodsDetail)) {
+            $data['dangerousGoodsDetail'] = $this->dangerousGoodsDetail->prepare();
+        }
+
+        if (!empty($this->dryIceWeight)) {
+            $data['dryIceWeight'] = $this->dryIceWeight->prepare();
+        }
+
+        return $data;
+    }
 
 }
