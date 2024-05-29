@@ -9,6 +9,7 @@ use FedexRest\Exceptions\MissingAccessTokenException;
 use FedexRest\Exceptions\MissingAccountNumberException;
 use FedexRest\Exceptions\MissingLineItemException;
 use FedexRest\Services\AbstractRequest;
+use FedexRest\Services\Ship\CreateShipment;
 use FedexRest\Services\Ship\Entity\Label;
 use FedexRest\Services\Ship\Entity\ShipmentSpecialServices;
 use FedexRest\Services\Ship\Entity\ShippingChargesPayment;
@@ -31,6 +32,7 @@ class CreateRatesRequest extends AbstractRequest
     protected int $totalWeight;
     protected string $preferredCurrency = '';
     protected int $totalPackageCount;
+    protected array $customsClearanceDetail = [];
 
     /**
      * {@inheritDoc}
@@ -280,6 +282,24 @@ class CreateRatesRequest extends AbstractRequest
     }
 
     /**
+     * @param array $customsClearanceDetail
+     * @return $this
+     */
+    public function setCustomsClearanceDetail(array $customsClearanceDetail): CreateShipment
+    {
+        $this->customsClearanceDetail = $customsClearanceDetail;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCustomsClearanceDetail(): array
+    {
+        return $this->customsClearanceDetail;
+    }
+
+    /**
      * @return array
      */
     public function getRequestedShipment(): array
@@ -327,6 +347,10 @@ class CreateRatesRequest extends AbstractRequest
 
         if (!empty($this->totalPackageCount)) {
             $data['totalPackageCount'] = $this->totalPackageCount;
+        }
+
+        if (!empty($this->customsClearanceDetail)) {
+            $data['customsClearanceDetail'] = $this->customsClearanceDetail;
         }
 
         return $data;
