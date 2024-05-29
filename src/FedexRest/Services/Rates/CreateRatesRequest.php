@@ -9,7 +9,6 @@ use FedexRest\Exceptions\MissingAccessTokenException;
 use FedexRest\Exceptions\MissingAccountNumberException;
 use FedexRest\Exceptions\MissingLineItemException;
 use FedexRest\Services\AbstractRequest;
-use FedexRest\Services\Ship\CreateShipment;
 use FedexRest\Services\Ship\Entity\Label;
 use FedexRest\Services\Ship\Entity\ShipmentSpecialServices;
 use FedexRest\Services\Ship\Entity\ShippingChargesPayment;
@@ -285,7 +284,7 @@ class CreateRatesRequest extends AbstractRequest
      * @param array $commodities
      * @return $this
      */
-    public function setCommodities(array $commodities): CreateShipment
+    public function setCommodities(array $commodities): CreateRatesRequest
     {
         $this->commodities = $commodities;
         return $this;
