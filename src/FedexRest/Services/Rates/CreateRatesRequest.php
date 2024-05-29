@@ -32,7 +32,7 @@ class CreateRatesRequest extends AbstractRequest
     protected int $totalWeight;
     protected string $preferredCurrency = '';
     protected int $totalPackageCount;
-    protected array $customsClearanceDetail = [];
+    protected array $commodities = [];
 
     /**
      * {@inheritDoc}
@@ -282,21 +282,21 @@ class CreateRatesRequest extends AbstractRequest
     }
 
     /**
-     * @param array $customsClearanceDetail
+     * @param array $commodities
      * @return $this
      */
-    public function setCustomsClearanceDetail(array $customsClearanceDetail): CreateShipment
+    public function setCommodities(array $commodities): CreateShipment
     {
-        $this->customsClearanceDetail = $customsClearanceDetail;
+        $this->commodities = $commodities;
         return $this;
     }
 
     /**
      * @return array
      */
-    public function getCustomsClearanceDetail(): array
+    public function getCommodities(): array
     {
-        return $this->customsClearanceDetail;
+        return $this->commodities;
     }
 
     /**
@@ -349,8 +349,10 @@ class CreateRatesRequest extends AbstractRequest
             $data['totalPackageCount'] = $this->totalPackageCount;
         }
 
-        if (!empty($this->customsClearanceDetail)) {
-            $data['customsClearanceDetail'] = $this->customsClearanceDetail;
+        if (!empty($this->commodities)) {
+            $data['customsClearanceDetail'] = [
+                'commodities' => $this->commodities
+            ];
         }
 
         return $data;
@@ -364,7 +366,7 @@ class CreateRatesRequest extends AbstractRequest
             ],
             'requestedShipment' => $this->getRequestedShipment(),
             'rateRequestControlParameters' => [
-                'returnTransitTimes' => 'TRUE'
+                'returnTransitTimes' => TRUE
             ]
         ];
     }
