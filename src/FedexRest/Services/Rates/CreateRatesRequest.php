@@ -339,6 +339,9 @@ class CreateRatesRequest extends AbstractRequest
                 'value' => $this->accountNumber,
             ],
             'requestedShipment' => $this->getRequestedShipment(),
+            'rateRequestControlParameters' => [
+                'returnTransitTimes' => 'TRUE'
+            ]
         ];
     }
 
