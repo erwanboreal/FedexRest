@@ -94,7 +94,8 @@ class PickupAvailability extends AbstractRequest {
                     'countryRelationship' => $this->countryRelationship,
                     'dispatchDate' => $this->dispatchDate,
                     'customerCloseTime' => $this->customerCloseTime
-                ]
+                ],
+                'http_errors' => FALSE,
             ]);
             return ($this->raw === true) ? $query : json_decode($query->getBody()->getContents());
         } catch (Exception $e) {

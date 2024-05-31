@@ -45,7 +45,8 @@ class TrackByTrackingNumberRequest extends AbstractRequest
                 'json' => [
                     'includeDetailedScans' => $this->include_detailed_scans,
                     'trackingInfo' => $this->preparedData(),
-                ]
+                ],
+                'http_errors' => FALSE,
             ]);
             return ($this->raw === true) ? $query : json_decode($query->getBody()->getContents());
         } catch (\Exception $e) {

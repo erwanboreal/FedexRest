@@ -105,7 +105,8 @@ class Pickup extends AbstractRequest {
                     'carrierCode' => $this->carrierCode,
                     'pickupType' => $this->pickupType,
                     'trackingNumber' => $this->trackingNumber
-                ]
+                ],
+                'http_errors' => FALSE,
             ]);
             return ($this->raw === true) ? $query : json_decode($query->getBody()->getContents());
         } catch (Exception $e) {

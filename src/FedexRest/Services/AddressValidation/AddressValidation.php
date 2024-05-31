@@ -37,6 +37,7 @@ class AddressValidation extends AbstractRequest
                     ],
                 ],
             ],
+            'http_errors' => FALSE,
         ];
     }
 
