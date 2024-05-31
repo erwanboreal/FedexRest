@@ -16,6 +16,7 @@ class Pickup extends AbstractRequest {
     protected string $carrierCode = '';
     protected string $customerCloseTime = '';
     protected int $accountNumber;
+    protected string $trackingNumber = '';
 
     /**
      * @return string
@@ -70,6 +71,15 @@ class Pickup extends AbstractRequest {
     }
 
     /**
+     * @param string $trackingNumber
+     * @return $this
+     */
+    public function setTrackingNumber(string $trackingNumber): Pickup {
+        $this->trackingNumber = $trackingNumber;
+        return $this;
+    }
+
+    /**
      * @param Person $recipient
      * @return $this
      */
@@ -93,7 +103,8 @@ class Pickup extends AbstractRequest {
                     ],
                     'originDetail' => $this->prepare(),
                     'carrierCode' => $this->carrierCode,
-                    'pickupType' => $this->pickupType
+                    'pickupType' => $this->pickupType,
+                    'trackingNumber' => $this->trackingNumber
                 ]
             ]);
             return ($this->raw === true) ? $query : json_decode($query->getBody()->getContents());
