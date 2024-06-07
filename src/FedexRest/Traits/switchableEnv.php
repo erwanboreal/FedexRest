@@ -27,13 +27,4 @@ trait switchableEnv
         $this->production_mode = true;
         return $this;
     }
-
-    /**
-     * @return $this
-     */
-    public function useDocumentUrl() {
-        $this->production_url = 'https://documentapi.prod.fedex.com';
-        $this->testing_url = 'https://documentapitest.prod.fedex.com/sandbox';
-        return $this;
-    }
 }
