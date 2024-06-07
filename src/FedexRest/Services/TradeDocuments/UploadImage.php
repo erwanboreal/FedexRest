@@ -7,24 +7,24 @@ use FedexRest\Exceptions\MissingAccessTokenException;
 use FedexRest\Services\AbstractRequest;
 use GuzzleHttp\Exception\GuzzleException;
 
-class UploadDocument extends AbstractRequest {
+class UploadImage extends AbstractRequest {
 
     protected string $attachment;
     protected string $workflowName;
-    protected string $carrierCode;
+    protected string $referenceId;
     protected string $name;
     protected string $contentType;
     protected array $meta;
 
     public function setApiEndpoint(): string {
-        return '/documents/v1/etds/upload';
+        return '/documents/v1/lhsimages/upload';
     }
 
     /**
      * @param string $attachment
      * @return $this
      */
-    public function setAttachment(string $attachment): UploadDocument {
+    public function setAttachment(string $attachment): UploadImage {
         $this->attachment = $attachment;
         return $this;
     }
@@ -33,17 +33,17 @@ class UploadDocument extends AbstractRequest {
      * @param string $workflowName ETDPreshipment or ETDPostshipment
      * @return $this
      */
-    public function setWorkflowName(string $workflowName): UploadDocument {
+    public function setWorkflowName(string $workflowName): UploadImage {
         $this->workflowName = $workflowName;
         return $this;
     }
 
     /**
-     * @param string $carrierCode FDXE or FDXG
+     * @param string $referenceId
      * @return $this
      */
-    public function setCarrierCode(string $carrierCode): UploadDocument {
-        $this->carrierCode = $carrierCode;
+    public function setReferenceId(string $referenceId): UploadImage {
+        $this->referenceId = $referenceId;
         return $this;
     }
 
@@ -51,7 +51,7 @@ class UploadDocument extends AbstractRequest {
      * @param string $name
      * @return $this
      */
-    public function setName(string $name): UploadDocument {
+    public function setName(string $name): UploadImage {
         $this->name = $name;
         return $this;
     }
@@ -60,7 +60,7 @@ class UploadDocument extends AbstractRequest {
      * @param string $contentType
      * @return $this
      */
-    public function setContentType(string $contentType): UploadDocument {
+    public function setContentType(string $contentType): UploadImage {
         $this->contentType = $contentType;
         return $this;
     }
@@ -69,7 +69,7 @@ class UploadDocument extends AbstractRequest {
      * @param array $meta
      * @return $this
      */
-    public function setMeta(array $meta): UploadDocument {
+    public function setMeta(array $meta): UploadImage {
         $this->meta = $meta;
         return $this;
     }
@@ -86,9 +86,9 @@ class UploadDocument extends AbstractRequest {
                 'json' => [
                     'attachment' => $this->attachment,
                     'document' => [
-                        "workflowName" => $this->workflowName,
-                        "carrierCode" => $this->carrierCode,
+                        "rules" => ["workflowName" => $this->workflowName],
                         "name" => $this->name,
+                        "referenceId" => $this->referenceId,
                         "contentType" => $this->contentType,
                         "meta" => $this->meta
                     ]
