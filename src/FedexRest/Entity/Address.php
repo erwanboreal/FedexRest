@@ -7,7 +7,7 @@ class Address
     public array $street_lines;
     public string $city;
     public string $state_or_province;
-    public string $postal_code;
+    public ?string $postal_code;
     public string $country_code;
     public bool $residential;
 
