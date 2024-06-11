@@ -42,10 +42,10 @@ class Address
     }
 
     /**
-     * @param string $postal_code
+     * @param string|null $postal_code
      * @return $this
      */
-    public function setPostalCode(string $postal_code)
+    public function setPostalCode(?string $postal_code)
     {
         $this->postal_code = $postal_code;
         return $this;
