@@ -52,7 +52,7 @@ class UploadImages extends AbstractRequest
     }
 
     /**
-     * @return string
+     * @return mixed
      * @throws MissingAccessTokenException
      */
     public function request() {
