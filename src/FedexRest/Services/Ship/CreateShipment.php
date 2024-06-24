@@ -19,6 +19,7 @@ use FedexRest\Services\Ship\Type\LabelDocOptionType;
 class CreateShipment extends AbstractRequest
 {
     protected Person $shipper;
+    protected Person $soldTo;
     protected array $recipients = [];
     protected Label $label;
     protected string $shipDatestamp = '';
@@ -59,6 +60,15 @@ class CreateShipment extends AbstractRequest
      */
     public function setShipper(Person $shipper): CreateShipment {
         $this->shipper = $shipper;
+        return $this;
+    }
+
+    /**
+     * @param Person $soldTo
+     * @return $this
+     */
+    public function setSoldTo(Person $soldTo): CreateShipment {
+        $this->soldTo = $soldTo;
         return $this;
     }
 
@@ -542,6 +552,7 @@ class CreateShipment extends AbstractRequest
         }
         $data = [
             'shipper' => $this->shipper->prepare(),
+            'soldTo' => $this->soldTo->prepare(),
             'recipients' => $recipients,
             'shipDatestamp' => $this->shipDatestamp,
             'serviceType' => $this->serviceType,
