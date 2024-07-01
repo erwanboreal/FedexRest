@@ -6,6 +6,7 @@ use FedexRest\Exceptions\MissingAccessTokenException;
 use FedexRest\Services\AbstractRequest;
 use FedexRest\Services\TradeDocument\Entity\Document;
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Support\Facades\Http;
 
 class UploadDocument extends AbstractRequest
 {
@@ -51,17 +52,24 @@ class UploadDocument extends AbstractRequest
     }
 
     /**
+     * @return mixed|string
      * @throws MissingAccessTokenException
-     * @throws GuzzleException
      */
-    public function request() {
+    public function request(): mixed
+    {
         parent::request();
+        $sender = Http::withOptions([
+            'headers' => [
+                'Authorization' => "Bearer {$this->access_token}",
+                'X-locale' => 'fr_FR'
+            ],
+        ]);
+
         try {
-            $query = $this->http_client->post($this->getApiUri($this->api_endpoint), [
-                'multipart' => $this->prepare(),
-                'http_errors' => FALSE,
-            ]);
-            return ($this->raw === true) ? $query : json_decode($query->getBody()->getContents());
+            $query = $sender->attach('attachment', $this->attachment, $this->document->name, ['Content-Type' => $this->document->contentType])
+                ->post($this->getApiUri($this->api_endpoint), ["document" => json_encode($this->document->prepare())]);
+
+            return json_decode($query->body());
         } catch (\Exception $e) {
             return $e->getMessage();
         }

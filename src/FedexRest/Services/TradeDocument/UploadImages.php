@@ -52,10 +52,11 @@ class UploadImages extends AbstractRequest
     }
 
     /**
-     * @return mixed
+     * @return mixed|string
      * @throws MissingAccessTokenException
      */
-    public function request() {
+    public function request(): mixed
+    {
         parent::request();
         $sender = Http::withOptions([
             'headers' => [
