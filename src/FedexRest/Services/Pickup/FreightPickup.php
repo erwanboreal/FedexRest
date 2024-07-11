@@ -56,6 +56,16 @@ class FreightPickup extends AbstractRequest {
     }
 
     /**
+     * @param FreightPickupDetail $freightPickupDetail
+     * @return $this
+     */
+    public function setFreightPickupDetail(FreightPickupDetail $freightPickupDetail): FreightPickup {
+        $this->freightPickupDetail = $freightPickupDetail;
+        return $this;
+    }
+
+
+    /**
      * @param Person $sender
      * @return $this
      */
