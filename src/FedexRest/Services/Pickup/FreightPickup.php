@@ -101,15 +101,7 @@ class FreightPickup extends AbstractRequest {
 
         try {
             $query = $this->http_client->post($this->getApiUri($this->api_endpoint), [
-                'json' => [
-                    'associatedAccountNumber' => [
-                        "value" => $this->accountNumber
-                    ],
-                    'originDetail' => $this->prepare(),
-                    'freightPickupDetail' => $this->freightPickupDetail->prepare(),
-                    'countryRelationships' => $this->countryRelationships,
-                    'totalWeight' => $this->totalWeight->prepare(),
-                ],
+                'json' => $this->prepare(),
                 'http_errors' => FALSE,
             ]);
             return ($this->raw === true) ? $query : json_decode($query->getBody()->getContents());
@@ -120,9 +112,17 @@ class FreightPickup extends AbstractRequest {
 
     public function prepare(): array {
         return [
-            'pickupLocation' => $this->sender->prepare(),
-            'readyDateTimestamp' => $this->readyDatestamp,
-            'customerCloseTime' => $this->customerCloseTime,
+            'associatedAccountNumber' => [
+                "value" => $this->accountNumber
+            ],
+            'originDetail' => [
+                'pickupLocation' => $this->sender->prepare(),
+                'readyDateTimestamp' => $this->readyDatestamp,
+                'customerCloseTime' => $this->customerCloseTime
+            ],
+            'freightPickupDetail' => $this->freightPickupDetail->prepare(),
+            'countryRelationships' => $this->countryRelationships,
+            'totalWeight' => $this->totalWeight->prepare(),
         ];
     }
 }

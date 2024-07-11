@@ -70,6 +70,19 @@ class FreightPickupAvailability extends AbstractRequest {
     }
 
     /**
+     * @return array
+     */
+    public function prepare(): array {
+        return [
+            'pickupAddress' => $this->pickupAddress->prepare(),
+            'countryRelationship' => $this->countryRelationship,
+            'dispatchDate' => $this->dispatchDate,
+            'customerCloseTime' => $this->customerCloseTime,
+            'shipmentAttributes' => $this->shipmentAttributes->prepare()
+        ];
+    }
+
+    /**
      * @throws MissingAccessTokenException
      * @throws GuzzleException
      */
@@ -78,13 +91,7 @@ class FreightPickupAvailability extends AbstractRequest {
 
         try {
             $query = $this->http_client->post($this->getApiUri($this->api_endpoint), [
-                'json' => [
-                    'pickupAddress' => $this->pickupAddress->prepare(),
-                    'countryRelationship' => $this->countryRelationship,
-                    'dispatchDate' => $this->dispatchDate,
-                    'customerCloseTime' => $this->customerCloseTime,
-                    'shipmentAttributes' => $this->shipmentAttributes->prepare()
-                ],
+                'json' => $this->prepare(),
                 'http_errors' => FALSE,
             ]);
             return ($this->raw === true) ? $query : json_decode($query->getBody()->getContents());
