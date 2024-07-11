@@ -11,8 +11,6 @@ use FedexRest\Services\Pickup\Entity\FreightPickupDetail;
 use GuzzleHttp\Exception\GuzzleException;
 
 class FreightPickup extends AbstractRequest {
-    protected string $production_url = 'https://developer.fedex.com/api/en-fr/catalog/ltl-freight';
-    protected string $testing_url = 'https://developer.fedex.com/api/en-fr/catalog/ltl-freight';
 
     protected Person $sender;
     protected string $readyDatestamp = '';

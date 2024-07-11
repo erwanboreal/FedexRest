@@ -10,8 +10,6 @@ use FedexRest\Services\Pickup\Entity\FreightShipmentAttributes;
 use GuzzleHttp\Exception\GuzzleException;
 
 class FreightPickupAvailability extends AbstractRequest {
-    protected string $production_url = 'https://developer.fedex.com/api/en-fr/catalog/ltl-freight';
-    protected string $testing_url = 'https://developer.fedex.com/api/en-fr/catalog/ltl-freight';
 
     protected Address $pickupAddress;
     protected string $countryRelationship = '';
