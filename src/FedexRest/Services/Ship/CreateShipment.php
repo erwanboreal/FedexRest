@@ -46,12 +46,22 @@ class CreateShipment extends AbstractRequest
     protected array $commodities;
     protected array $commercialInvoice;
     protected array $shippingDocs;
+    protected array $expressFreightDetail;
 
     /**
      * {@inheritDoc}
      */
     public function setApiEndpoint() {
         return '/ship/v1/shipments';
+    }
+
+    /**
+     * @param array $expressFreightDetail
+     * @return $this
+     */
+    public function setExpressFreightDetail(array $expressFreightDetail): CreateShipment {
+        $this->expressFreightDetail = $expressFreightDetail;
+        return $this;
     }
 
     /**
@@ -604,6 +614,9 @@ class CreateShipment extends AbstractRequest
         }
         if(!empty($this->shippingDocs)) {
             $data['shippingDocumentSpecification'] = $this->shippingDocs;
+        }
+        if(!empty($this->expressFreightDetail)) {
+            $data['expressFreightDetail'] = $this->expressFreightDetail;
         }
         return $data;
     }
