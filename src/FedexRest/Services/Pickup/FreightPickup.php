@@ -4,51 +4,36 @@ namespace FedexRest\Services\Pickup;
 
 use Exception;
 use FedexRest\Entity\Person;
+use FedexRest\Entity\Weight;
 use FedexRest\Exceptions\MissingAccessTokenException;
 use FedexRest\Services\AbstractRequest;
+use FedexRest\Services\Pickup\Entity\FreightPickupDetail;
 use GuzzleHttp\Exception\GuzzleException;
 
-class Pickup extends AbstractRequest {
+class FreightPickup extends AbstractRequest {
 
     protected Person $sender;
     protected string $readyDatestamp = '';
-    protected string $pickupType = '';
-    protected string $carrierCode = '';
     protected string $customerCloseTime = '';
+    protected Weight $totalWeight;
+    protected string $countryRelationships;
+    protected FreightPickupDetail $freightPickupDetail;
     protected int $accountNumber;
-    protected string $trackingNumber = '';
+
 
     /**
      * @return string
      */
     public function setApiEndpoint(): string {
-        return '/pickup/v1/pickups';
-    }
-
-    /**
-     * @param string $pickupType
-     * @return $this
-     */
-    public function setPickupType(string $pickupType): Pickup {
-        $this->pickupType = $pickupType;
-        return $this;
+        return '/pickup/v1/freight/pickups';
     }
 
     /**
      * @param int $accountNumber
      * @return $this
      */
-    public function setAccountNumber(int $accountNumber): Pickup {
+    public function setAccountNumber(int $accountNumber): FreightPickup {
         $this->accountNumber = $accountNumber;
-        return $this;
-    }
-
-    /**
-     * @param string $carrierCode
-     * @return $this
-     */
-    public function setCarrierCode(string $carrierCode): Pickup {
-        $this->carrierCode = $carrierCode;
         return $this;
     }
 
@@ -56,7 +41,7 @@ class Pickup extends AbstractRequest {
      * @param string $readyDatestamp
      * @return $this
      */
-    public function setReadyDatestamp(string $readyDatestamp): Pickup {
+    public function setReadyDatestamp(string $readyDatestamp): FreightPickup {
         $this->readyDatestamp = $readyDatestamp;
         return $this;
     }
@@ -65,17 +50,8 @@ class Pickup extends AbstractRequest {
      * @param string $customerCloseTime
      * @return $this
      */
-    public function setCustomerCloseTime(string $customerCloseTime): Pickup {
+    public function setCustomerCloseTime(string $customerCloseTime): FreightPickup {
         $this->customerCloseTime = $customerCloseTime;
-        return $this;
-    }
-
-    /**
-     * @param string $trackingNumber
-     * @return $this
-     */
-    public function setTrackingNumber(string $trackingNumber): Pickup {
-        $this->trackingNumber = $trackingNumber;
         return $this;
     }
 
@@ -83,8 +59,26 @@ class Pickup extends AbstractRequest {
      * @param Person $sender
      * @return $this
      */
-    public function setSender(Person $sender): Pickup {
+    public function setSender(Person $sender): FreightPickup {
         $this->sender = $sender;
+        return $this;
+    }
+
+    /**
+     * @param Weight $totalWeight
+     * @return $this
+     */
+    public function setTotalWeight(Weight $totalWeight): FreightPickup {
+        $this->totalWeight = $totalWeight;
+        return $this;
+    }
+
+    /**
+     * @param string $countryRelationships
+     * @return $this
+     */
+    public function setCountryRelationships(string $countryRelationships): FreightPickup {
+        $this->countryRelationships = $countryRelationships;
         return $this;
     }
 
@@ -102,9 +96,9 @@ class Pickup extends AbstractRequest {
                         "value" => $this->accountNumber
                     ],
                     'originDetail' => $this->prepare(),
-                    'carrierCode' => $this->carrierCode,
-                    'pickupType' => $this->pickupType,
-                    'trackingNumber' => $this->trackingNumber
+                    'freightPickupDetail' => $this->freightPickupDetail->prepare(),
+                    'countryRelationships' => $this->countryRelationships,
+                    'totalWeight' => $this->totalWeight->prepare(),
                 ],
                 'http_errors' => FALSE,
             ]);
