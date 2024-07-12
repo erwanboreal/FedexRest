@@ -23,6 +23,7 @@ class ExpressFreightDetail {
 
     /**
      * @param string $truckType
+     * "DROP_TRAILER_AGREEMENT" "LIFTGATE" "TRACTOR_TRAILER_ACCESS"
      * @return $this
      */
     public function setTruckType(string $truckType): ExpressFreightDetail {
@@ -32,6 +33,7 @@ class ExpressFreightDetail {
 
     /**
      * @param string $trailerLength
+     * "TRAILER_28_FT" "TRAILER_48_FT" "TRAILER_53_FT"
      * @return $this
      */
     public function setTrailerLength(string $trailerLength): ExpressFreightDetail {
