@@ -7,6 +7,9 @@ use FedexRest\Entity\Dimensions;
 class ExpressFreightDetail {
 
     public string $service;
+    public ?string $truckType;
+    public ?string $trailerLength;
+    public ?string $bookingNumber;
     public Dimensions $dimensions;
 
     /**
@@ -15,6 +18,33 @@ class ExpressFreightDetail {
      */
     public function setService(string $service): ExpressFreightDetail {
         $this->service = $service;
+        return $this;
+    }
+
+    /**
+     * @param string $truckType
+     * @return $this
+     */
+    public function setTruckType(string $truckType): ExpressFreightDetail {
+        $this->truckType = $truckType;
+        return $this;
+    }
+
+    /**
+     * @param string $trailerLength
+     * @return $this
+     */
+    public function setTrailerLength(string $trailerLength): ExpressFreightDetail {
+        $this->trailerLength = $trailerLength;
+        return $this;
+    }
+
+    /**
+     * @param string $bookingNumber
+     * @return $this
+     */
+    public function setBookingNumber(string $bookingNumber): ExpressFreightDetail {
+        $this->bookingNumber = $bookingNumber;
         return $this;
     }
 
@@ -28,10 +58,22 @@ class ExpressFreightDetail {
     }
 
     public function prepare(): array {
-        return [
+        $res = [
             "dimensions" => $this->dimensions->prepare(),
-            "service" => $this->service
+            "service" => $this->service,
         ];
+
+        if(!empty($this->truckType)){
+            $res["trucType"] = $this->truckType;
+        }
+        if(!empty($this->trailerLength)){
+            $res["trailerLength"] = $this->trailerLength;
+        }
+        if(!empty($this->bookingNumber)){
+            $res["bookingNumber"] = $this->bookingNumber;
+        }
+
+        return $res;
     }
 
 }
