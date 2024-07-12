@@ -6,6 +6,7 @@ use Exception;
 use FedexRest\Entity\Person;
 use FedexRest\Exceptions\MissingAccessTokenException;
 use FedexRest\Services\AbstractRequest;
+use FedexRest\Services\Pickup\Entity\ExpressFreightDetail;
 use GuzzleHttp\Exception\GuzzleException;
 
 class Pickup extends AbstractRequest {
@@ -17,6 +18,7 @@ class Pickup extends AbstractRequest {
     protected string $customerCloseTime = '';
     protected int $accountNumber;
     protected string $trackingNumber = '';
+    protected ?ExpressFreightDetail $expressFreightDetail;
 
     /**
      * @return string
@@ -31,6 +33,15 @@ class Pickup extends AbstractRequest {
      */
     public function setPickupType(string $pickupType): Pickup {
         $this->pickupType = $pickupType;
+        return $this;
+    }
+
+    /**
+     * @param ExpressFreightDetail $expressFreightDetail
+     * @return $this
+     */
+    public function setExpressFreightDetail(ExpressFreightDetail $expressFreightDetail): Pickup {
+        $this->expressFreightDetail = $expressFreightDetail;
         return $this;
     }
 
@@ -97,15 +108,7 @@ class Pickup extends AbstractRequest {
 
         try {
             $query = $this->http_client->post($this->getApiUri($this->api_endpoint), [
-                'json' => [
-                    'associatedAccountNumber' => [
-                        "value" => $this->accountNumber
-                    ],
-                    'originDetail' => $this->prepare(),
-                    'carrierCode' => $this->carrierCode,
-                    'pickupType' => $this->pickupType,
-                    'trackingNumber' => $this->trackingNumber
-                ],
+                'json' => $this->prepare(),
                 'http_errors' => FALSE,
             ]);
             return ($this->raw === true) ? $query : json_decode($query->getBody()->getContents());
@@ -115,10 +118,24 @@ class Pickup extends AbstractRequest {
     }
 
     public function prepare(): array {
-        return [
-            'pickupLocation' => $this->sender->prepare(),
-            'readyDateTimestamp' => $this->readyDatestamp,
-            'customerCloseTime' => $this->customerCloseTime,
+        $res = [
+            'associatedAccountNumber' => [
+                "value" => $this->accountNumber
+            ],
+            'originDetail' => [
+                'pickupLocation' => $this->sender->prepare(),
+                'readyDateTimestamp' => $this->readyDatestamp,
+                'customerCloseTime' => $this->customerCloseTime,
+            ],
+            'carrierCode' => $this->carrierCode,
+            'pickupType' => $this->pickupType,
+            'trackingNumber' => $this->trackingNumber
         ];
+
+        if(!empty($this->expressFreightDetail)){
+            $res["expressFreightDetail"] = $this->expressFreightDetail;
+        }
+
+        return $res;
     }
 }

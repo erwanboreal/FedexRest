@@ -6,7 +6,7 @@ use Exception;
 use FedexRest\Entity\Address;
 use FedexRest\Exceptions\MissingAccessTokenException;
 use FedexRest\Services\AbstractRequest;
-use FedexRest\Services\Pickup\Entity\FreightShipmentAttributes;
+use FedexRest\Services\Pickup\Entity\ShipmentAttributes;
 use GuzzleHttp\Exception\GuzzleException;
 
 class PickupAvailability extends AbstractRequest {
@@ -17,7 +17,7 @@ class PickupAvailability extends AbstractRequest {
     protected string $countryRelationship = '';
     protected string $dispatchDate = '';
     protected string $customerCloseTime = '';
-    protected FreightShipmentAttributes $shipmentAttributes;
+    protected ShipmentAttributes $shipmentAttributes;
 
 
     /**
@@ -82,10 +82,10 @@ class PickupAvailability extends AbstractRequest {
     }
 
     /**
-     * @param FreightShipmentAttributes $shipmentAttributes
+     * @param ShipmentAttributes $shipmentAttributes
      * @return $this
      */
-    public function setShipmentAttributes(FreightShipmentAttributes $shipmentAttributes): PickupAvailability {
+    public function setShipmentAttributes(ShipmentAttributes $shipmentAttributes): PickupAvailability {
         $this->shipmentAttributes = $shipmentAttributes;
         return $this;
     }

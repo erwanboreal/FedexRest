@@ -6,7 +6,7 @@ use FedexRest\Entity\Dimensions;
 use FedexRest\Entity\Weight;
 use FedexRest\Services\Ship\Type\PackagingType;
 
-class FreightShipmentAttributes {
+class ShipmentAttributes {
 
     public ?Weight $weight;
     public ?Dimensions $dimensions;
@@ -17,7 +17,7 @@ class FreightShipmentAttributes {
      * @param  Weight|null  $weight
      * @return $this
      */
-    public function setWeight(?Weight $weight): FreightShipmentAttributes
+    public function setWeight(?Weight $weight): ShipmentAttributes
     {
         $this->weight = $weight;
         return $this;
@@ -27,7 +27,7 @@ class FreightShipmentAttributes {
      * @param  Dimensions|null $dimensions
      * @return $this
      */
-    public function setDimensions(?Dimensions $dimensions): FreightShipmentAttributes
+    public function setDimensions(?Dimensions $dimensions): ShipmentAttributes
     {
         $this->dimensions = $dimensions;
         return $this;
@@ -37,7 +37,7 @@ class FreightShipmentAttributes {
      * @param string $service
      * @return $this
      */
-    public function setService(string $service): FreightShipmentAttributes
+    public function setService(string $service): ShipmentAttributes
     {
         $this->service = $service;
         return $this;
@@ -48,7 +48,7 @@ class FreightShipmentAttributes {
      * Refer PackagingType
      * @return $this
      */
-    public function setPackagingType(string $packagingType): FreightShipmentAttributes
+    public function setPackagingType(string $packagingType): ShipmentAttributes
     {
         $this->packagingType = $packagingType;
         return $this;
