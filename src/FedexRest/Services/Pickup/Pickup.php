@@ -4,6 +4,7 @@ namespace FedexRest\Services\Pickup;
 
 use Exception;
 use FedexRest\Entity\Person;
+use FedexRest\Entity\Weight;
 use FedexRest\Exceptions\MissingAccessTokenException;
 use FedexRest\Services\AbstractRequest;
 use FedexRest\Services\Pickup\Entity\ExpressFreightDetail;
@@ -18,6 +19,7 @@ class Pickup extends AbstractRequest {
     protected string $customerCloseTime = '';
     protected int $accountNumber;
     protected string $trackingNumber = '';
+    protected Weight $totalWeight;
     protected ?ExpressFreightDetail $expressFreightDetail;
 
     /**
@@ -33,6 +35,15 @@ class Pickup extends AbstractRequest {
      */
     public function setPickupType(string $pickupType): Pickup {
         $this->pickupType = $pickupType;
+        return $this;
+    }
+
+    /**
+     * @param Weight $totalWeight
+     * @return $this
+     */
+    public function setTotalWeight(Weight $totalWeight): Pickup {
+        $this->totalWeight = $totalWeight;
         return $this;
     }
 
@@ -129,7 +140,8 @@ class Pickup extends AbstractRequest {
             ],
             'carrierCode' => $this->carrierCode,
             'pickupType' => $this->pickupType,
-            'trackingNumber' => $this->trackingNumber
+            'trackingNumber' => $this->trackingNumber,
+            'totalWeight' => $this->totalWeight
         ];
 
         if(!empty($this->expressFreightDetail)){
