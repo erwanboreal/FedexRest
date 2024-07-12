@@ -6,6 +6,7 @@ use Exception;
 use FedexRest\Entity\Address;
 use FedexRest\Exceptions\MissingAccessTokenException;
 use FedexRest\Services\AbstractRequest;
+use FedexRest\Services\Pickup\Entity\FreightShipmentAttributes;
 use GuzzleHttp\Exception\GuzzleException;
 
 class PickupAvailability extends AbstractRequest {
@@ -16,6 +17,8 @@ class PickupAvailability extends AbstractRequest {
     protected string $countryRelationship = '';
     protected string $dispatchDate = '';
     protected string $customerCloseTime = '';
+    protected FreightShipmentAttributes $shipmentAttributes;
+
 
     /**
      * @return string
@@ -79,6 +82,30 @@ class PickupAvailability extends AbstractRequest {
     }
 
     /**
+     * @param FreightShipmentAttributes $shipmentAttributes
+     * @return $this
+     */
+    public function setShipmentAttributes(FreightShipmentAttributes $shipmentAttributes): PickupAvailability {
+        $this->shipmentAttributes = $shipmentAttributes;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function prepare(): array {
+        return [
+            'pickupAddress' => $this->pickupAddress->prepare(),
+            'pickupRequestType' => $this->pickupRequestType,
+            'carriers' => $this->carriers,
+            'countryRelationship' => $this->countryRelationship,
+            'dispatchDate' => $this->dispatchDate,
+            'customerCloseTime' => $this->customerCloseTime,
+            'shipmentAttributes' => $this->shipmentAttributes->prepare()
+        ];
+    }
+
+    /**
      * @throws MissingAccessTokenException
      * @throws GuzzleException
      */
@@ -87,14 +114,7 @@ class PickupAvailability extends AbstractRequest {
 
         try {
             $query = $this->http_client->post($this->getApiUri($this->api_endpoint), [
-                'json' => [
-                    'pickupAddress' => $this->pickupAddress->prepare(),
-                    'pickupRequestType' => $this->pickupRequestType,
-                    'carriers' => $this->carriers,
-                    'countryRelationship' => $this->countryRelationship,
-                    'dispatchDate' => $this->dispatchDate,
-                    'customerCloseTime' => $this->customerCloseTime
-                ],
+                'json' => $this->prepare(),
                 'http_errors' => FALSE,
             ]);
             return ($this->raw === true) ? $query : json_decode($query->getBody()->getContents());
