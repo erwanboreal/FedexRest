@@ -18,7 +18,7 @@ class Pickup extends AbstractRequest {
     protected string $carrierCode = '';
     protected string $customerCloseTime = '';
     protected int $accountNumber;
-    protected string $trackingNumber = '';
+    protected ?string $trackingNumber;
     protected Weight $totalWeight;
     protected ?ExpressFreightDetail $expressFreightDetail;
 
@@ -140,12 +140,15 @@ class Pickup extends AbstractRequest {
             ],
             'carrierCode' => $this->carrierCode,
             'pickupType' => $this->pickupType,
-            'trackingNumber' => $this->trackingNumber,
             'totalWeight' => $this->totalWeight
         ];
 
         if(!empty($this->expressFreightDetail)){
             $res["expressFreightDetail"] = $this->expressFreightDetail;
+        }
+
+        if(!empty($this->trackingNumber)){
+            $res["trackingNumber"] = $this->trackingNumber;
         }
 
         return $res;
