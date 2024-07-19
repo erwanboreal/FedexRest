@@ -98,6 +98,7 @@ class Person
 
         if(!empty($this->taxId)){
             $data['tins']['number'] = $this->taxId;
+            $data['tins']['tinType'] = "BUSINESS_NATIONAL";
         }
         return $data;
     }
