@@ -63,8 +63,8 @@ class PackageSpecialServicesRequested
     public function prepare(): array {
         $data = [];
 
-        if (!empty($this->setSpecialServiceTypes)) {
-            $data['specialServiceTypes'] = $this->setSpecialServiceTypes;
+        if (!empty($this->specialServiceTypes)) {
+            $data['specialServiceTypes'] = $this->specialServiceTypes;
         }
 
         if (!empty($this->signatureOptionType)) {
