@@ -12,6 +12,7 @@ class PickupCancel extends AbstractRequest {
     protected int $accountNumber;
     protected string $pickupConfirmationCode = '';
     protected string $scheduledDate = '';
+    protected string $location = '';
 
     /**
      * @return string
@@ -48,6 +49,15 @@ class PickupCancel extends AbstractRequest {
     }
 
     /**
+     * @param string $location
+     * @return $this
+     */
+    public function setLocation(string $location): PickupCancel {
+        $this->location = $location;
+        return $this;
+    }
+
+    /**
      * @throws MissingAccessTokenException
      * @throws GuzzleException
      */
@@ -72,6 +82,7 @@ class PickupCancel extends AbstractRequest {
             ],
             'pickupConfirmationCode' => $this->pickupConfirmationCode,
             'scheduledDate' => $this->scheduledDate,
+            'location' => $this->location
         ];
     }
 
