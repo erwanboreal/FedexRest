@@ -24,7 +24,7 @@ class PickupCancel extends AbstractRequest {
      * @param int $accountNumber
      * @return $this
      */
-    public function setAccountNumber(int $accountNumber): Pickup {
+    public function setAccountNumber(int $accountNumber): PickupCancel {
         $this->accountNumber = $accountNumber;
         return $this;
     }
@@ -33,7 +33,7 @@ class PickupCancel extends AbstractRequest {
      * @param string $pickupConfirmationCode
      * @return $this
      */
-    public function setPickupConfirmationCode(string $pickupConfirmationCode): Pickup {
+    public function setPickupConfirmationCode(string $pickupConfirmationCode): PickupCancel {
         $this->pickupConfirmationCode = $pickupConfirmationCode;
         return $this;
     }
@@ -42,7 +42,7 @@ class PickupCancel extends AbstractRequest {
      * @param string $scheduledDate
      * @return $this
      */
-    public function setScheduledDate(string $scheduledDate): Pickup {
+    public function setScheduledDate(string $scheduledDate): PickupCancel {
         $this->scheduledDate = $scheduledDate;
         return $this;
     }
