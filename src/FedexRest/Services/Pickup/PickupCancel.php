@@ -55,7 +55,7 @@ class PickupCancel extends AbstractRequest {
         parent::request();
 
         try {
-            $query = $this->http_client->post($this->getApiUri($this->api_endpoint), [
+            $query = $this->http_client->put($this->getApiUri($this->api_endpoint), [
                 'json' => $this->prepare(),
                 'http_errors' => FALSE,
             ]);
