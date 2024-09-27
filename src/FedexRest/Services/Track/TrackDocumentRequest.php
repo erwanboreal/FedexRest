@@ -33,6 +33,7 @@ class TrackDocumentRequest extends AbstractRequest
 
     /**
      * @param $documentType
+     * SIGNATURE_PROOF_OF_DELIVERY, BILL_OF_LADING or FREIGHT_BILLING_DOCUMENT.
      * @return $this
      */
     public function setDocumentType($documentType): TrackDocumentRequest
