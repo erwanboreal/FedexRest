@@ -88,7 +88,7 @@ class Pickup extends AbstractRequest {
      * @param string $countryRelationship
      * @return $this
      */
-    public function setCountryRelationship(string $countryRelationship): PickupAvailability {
+    public function setCountryRelationship(string $countryRelationship): Pickup {
         $this->countryRelationship = $countryRelationship;
         return $this;
     }
