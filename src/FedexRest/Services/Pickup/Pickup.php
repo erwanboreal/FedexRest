@@ -17,6 +17,7 @@ class Pickup extends AbstractRequest {
     protected string $pickupType = '';
     protected string $carrierCode = '';
     protected string $customerCloseTime = '';
+    protected string $countryRelationship = '';
     protected int $accountNumber;
     protected ?string $trackingNumber;
     protected Weight $totalWeight;
@@ -84,6 +85,15 @@ class Pickup extends AbstractRequest {
     }
 
     /**
+     * @param string $countryRelationship
+     * @return $this
+     */
+    public function setCountryRelationship(string $countryRelationship): PickupAvailability {
+        $this->countryRelationship = $countryRelationship;
+        return $this;
+    }
+
+    /**
      * @param string $customerCloseTime
      * @return $this
      */
@@ -138,15 +148,21 @@ class Pickup extends AbstractRequest {
                 'readyDateTimestamp' => $this->readyDatestamp,
                 'customerCloseTime' => $this->customerCloseTime,
             ],
-            'carrierCode' => $this->carrierCode,
-            'pickupType' => $this->pickupType,
-            'totalWeight' => $this->totalWeight
+            'carrierCode' => $this->carrierCode
         ];
 
+        if(!empty($this->pickupType)){
+            $res['pickupType'] = $this->pickupType;
+        }
+        if(!empty($this->totalWeight)){
+            $res['totalWeight'] = $this->totalWeight;
+        }
         if(!empty($this->expressFreightDetail)){
             $res["expressFreightDetail"] = $this->expressFreightDetail;
         }
-
+        if(!empty($this->countryRelationship)){
+            $res["countryRelationships"] = $this->countryRelationship;
+        }
         if(!empty($this->trackingNumber)){
             $res["trackingNumber"] = $this->trackingNumber;
         }
