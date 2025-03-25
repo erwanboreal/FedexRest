@@ -29,7 +29,7 @@ class Value
 
     public function prepare(): array {
         $data = [];
-        if (!empty($this->amount)) {
+        if (isset($this->amount)) {
             $data['amount'] = $this->amount;
         }
         if (!empty($this->currency)) {
