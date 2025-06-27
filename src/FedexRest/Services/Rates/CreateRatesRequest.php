@@ -314,6 +314,13 @@ class CreateRatesRequest extends AbstractRequest
             'recipient' => $this->recipient->prepare(),
             'pickupType' => $this->pickupType,
             'requestedPackageLineItems' => $line_items,
+            'shippingChargesPayment' => [
+                "payor" => [
+                    'accountNumber' => [
+                        'value' => $this->accountNumber,
+                    ]
+                ]
+            ]
         ];
 
         if (!empty($this->shipmentSpecialServices)) {
