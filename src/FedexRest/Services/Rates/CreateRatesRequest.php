@@ -314,13 +314,6 @@ class CreateRatesRequest extends AbstractRequest
             'recipient' => $this->recipient->prepare(),
             'pickupType' => $this->pickupType,
             'requestedPackageLineItems' => $line_items,
-            'shippingChargesPayment' => [
-                "payor" => [
-                    'accountNumber' => [
-                        'value' => $this->accountNumber,
-                    ]
-                ]
-            ]
         ];
 
         if (!empty($this->shipmentSpecialServices)) {
@@ -357,7 +350,10 @@ class CreateRatesRequest extends AbstractRequest
 
         if (!empty($this->commodities)) {
             $data['customsClearanceDetail'] = [
-                'commodities' => $this->commodities
+                'commodities' => $this->commodities,
+                'dutiesPayment' => [
+                    "paymentType" => "SENDER",
+                ]
             ];
         }
 
