@@ -350,10 +350,7 @@ class CreateRatesRequest extends AbstractRequest
 
         if (!empty($this->commodities)) {
             $data['customsClearanceDetail'] = [
-                'commodities' => $this->commodities,
-                'dutiesPayment' => [
-                    "paymentType" => "RECIPIENT",
-                ]
+                'commodities' => $this->commodities
             ];
         }
 
