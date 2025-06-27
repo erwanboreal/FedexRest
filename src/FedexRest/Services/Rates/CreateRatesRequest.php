@@ -352,7 +352,7 @@ class CreateRatesRequest extends AbstractRequest
             $data['customsClearanceDetail'] = [
                 'commodities' => $this->commodities,
                 'dutiesPayment' => [
-                    "paymentType" => "SENDER",
+                    "paymentType" => "RECIPIENT",
                 ]
             ];
         }
