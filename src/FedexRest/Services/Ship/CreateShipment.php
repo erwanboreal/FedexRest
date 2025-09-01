@@ -36,7 +36,7 @@ class CreateShipment extends AbstractRequest
     protected string $processingOptionType = '';
     protected Value $totalDeclaredValue;
     protected string $recipientLocationNumber = '';
-    protected int $totalWeight;
+    protected float $totalWeight;
     protected Person $origin;
     protected bool $blockInsightVisibility = FALSE;
     protected bool $oneLabelAtATime = FALSE;
@@ -440,19 +440,19 @@ class CreateShipment extends AbstractRequest
     }
 
     /**
-     * @param  int  $totalWeight
+     * @param  float $totalWeight
      * @return $this
      */
-    public function setTotalWeight(int $totalWeight): CreateShipment
+    public function setTotalWeight(float $totalWeight): CreateShipment
     {
         $this->totalWeight = $totalWeight;
         return $this;
     }
 
     /**
-     * @return int
+     * @return float
      */
-    public function getTotalWeight(): int
+    public function getTotalWeight(): float
     {
         return $this->totalWeight;
     }
