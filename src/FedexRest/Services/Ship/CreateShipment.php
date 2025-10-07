@@ -45,6 +45,7 @@ class CreateShipment extends AbstractRequest
     protected Value $totalCustomsValue;
     protected array $commodities;
     protected array $commercialInvoice;
+    protected array $exportDetail;
     protected array $shippingDocs;
     protected array $expressFreightDetail;
 
@@ -422,6 +423,24 @@ class CreateShipment extends AbstractRequest
     }
 
     /**
+     * @param array $exportDetail
+     * @return $this
+     */
+    public function setExportDetail(array $exportDetail): CreateShipment
+    {
+        $this->exportDetail = $exportDetail;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getExportDetail(): array
+    {
+        return $this->exportDetail;
+    }
+
+    /**
      * @param  string  $recipientLocationNumber
      * @return $this
      */
@@ -611,6 +630,9 @@ class CreateShipment extends AbstractRequest
         }
         if(!empty($this->commercialInvoice)) {
             $data['customsClearanceDetail']['commercialInvoice'] = $this->commercialInvoice;
+        }
+        if(!empty($this->exportDetail)) {
+            $data['customsClearanceDetail']['exportDetail'] = $this->exportDetail;
         }
         if(!empty($this->shippingDocs)) {
             $data['shippingDocumentSpecification'] = $this->shippingDocs;
