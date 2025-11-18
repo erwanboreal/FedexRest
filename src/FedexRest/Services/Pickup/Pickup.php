@@ -21,6 +21,7 @@ class Pickup extends AbstractRequest {
     protected int $accountNumber;
     protected ?string $trackingNumber;
     protected Weight $totalWeight;
+    protected int $packageCount;
     protected ?ExpressFreightDetail $expressFreightDetail;
 
     /**
@@ -112,6 +113,15 @@ class Pickup extends AbstractRequest {
     }
 
     /**
+     * @param int $packageCount
+     * @return $this
+     */
+    public function setPackageCount(int $packageCount): Pickup {
+        $this->packageCount = $packageCount;
+        return $this;
+    }
+
+    /**
      * @param Person $sender
      * @return $this
      */
@@ -156,6 +166,9 @@ class Pickup extends AbstractRequest {
         }
         if(!empty($this->totalWeight)){
             $res['totalWeight'] = $this->totalWeight;
+        }
+        if(!empty($this->packageCount)){
+            $res['packageCount'] = $this->packageCount;
         }
         if(!empty($this->expressFreightDetail)){
             $res["expressFreightDetail"] = $this->expressFreightDetail;
