@@ -36,6 +36,14 @@ class Label
         if (!empty($this->imageType)) {
             $data['imageType'] = $this->imageType;
         }
+        $data["customerSpecifiedDetail"] = [
+            "additionalLabels" => [
+                [
+                    "type" => "MANIFEST",
+                    "count" => 1
+                ]
+            ]
+        ];
         return $data;
     }
 }
