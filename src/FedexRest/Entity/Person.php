@@ -12,6 +12,7 @@ class Person
     public string $companyName = '';
     public string $email = '';
     public ?string $taxId = null;
+    public ?string $taxType = null;
 
     /**
      * @param  mixed  $address
@@ -74,6 +75,15 @@ class Person
     }
 
     /**
+     * @param string|null $taxType
+     * @return $this
+     */
+    public function setTaxType(?string $taxType) {
+        $this->taxType = $taxType;
+        return $this;
+    }
+
+    /**
      * @return array[]
      */
     public function prepare(): array
@@ -91,14 +101,14 @@ class Person
         if (!empty($this->email)) {
             $data['contact']['emailAddress'] = $this->email;
         }
-
         if ($this->address != null) {
             $data['address'] = $this->address->prepare();
         }
-
         if(!empty($this->taxId)){
             $data['tins']['number'] = $this->taxId;
-            $data['tins']['tinType'] = "BUSINESS_NATIONAL";
+        }
+        if(!empty($this->taxType)){
+            $data['tins']['tinType'] = $this->taxType;
         }
         return $data;
     }

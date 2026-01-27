@@ -38,6 +38,7 @@ class CreateShipment extends AbstractRequest
     protected string $recipientLocationNumber = '';
     protected float $totalWeight;
     protected Person $origin;
+    protected Person $broker;
     protected bool $blockInsightVisibility = FALSE;
     protected bool $oneLabelAtATime = FALSE;
     protected string $preferredCurrency = '';
@@ -496,6 +497,25 @@ class CreateShipment extends AbstractRequest
     }
 
     /**
+     * @param  \FedexRest\Entity\Person  $broker
+     *
+     * @return $this
+     */
+    public function setBroker(Person $broker): CreateShipment
+    {
+        $this->broker = $broker;
+        return $this;
+    }
+
+    /**
+     * @return \FedexRest\Entity\Person
+     */
+    public function getBroker(): Person
+    {
+        return $this->broker;
+    }
+
+    /**
      * @param  bool  $blockInsightVisibility
      * @return $this
      */
@@ -624,6 +644,12 @@ class CreateShipment extends AbstractRequest
             $data['customsClearanceDetail']['totalCustomsValue'] = $this->totalCustomsValue->prepare();
             $data['customsClearanceDetail']['dutiesPayment'] = ["paymentType" => "RECIPIENT"];
             $data['customsClearanceDetail']['generatedDocumentLocale'] = "en_US";
+        }
+        if (!empty($this->broker)) {
+            $data['customsClearanceDetail']['brokers'] = [
+                "broker" => $this->broker->prepare(),
+                "type" => "IMPORT"
+            ];
         }
         if(!empty($this->commodities)) {
             $data['customsClearanceDetail']['commodities'] = $this->commodities;
