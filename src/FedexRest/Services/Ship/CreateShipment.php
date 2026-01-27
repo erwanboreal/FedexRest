@@ -647,8 +647,10 @@ class CreateShipment extends AbstractRequest
         }
         if (!empty($this->broker)) {
             $data['customsClearanceDetail']['brokers'] = [
-                "broker" => $this->broker->prepare(),
-                "type" => "IMPORT"
+                [
+                    "broker" => $this->broker->prepare(),
+                    "type" => "IMPORT"
+                ]
             ];
         }
         if(!empty($this->commodities)) {
