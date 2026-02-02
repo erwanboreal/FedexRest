@@ -651,7 +651,8 @@ class CreateShipment extends AbstractRequest
         if(!empty($this->totalCustomsValue)) {
             $data['customsClearanceDetail']['totalCustomsValue'] = $this->totalCustomsValue->prepare();
             $data['customsClearanceDetail']['dutiesPayment'] =
-                ["paymentType" => !empty($this->dutiesPayment) ? $this->dutiesPayment : "RECIPIENT"];
+                !empty($this->dutiesPayment) ? $this->dutiesPayment->prepare() :
+                ["paymentType" => "RECIPIENT"];
             $data['customsClearanceDetail']['generatedDocumentLocale'] = "en_US";
         }
         if (!empty($this->broker)) {
