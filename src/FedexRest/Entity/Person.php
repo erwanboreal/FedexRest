@@ -105,10 +105,10 @@ class Person
             $data['address'] = $this->address->prepare();
         }
         if(!empty($this->taxId)){
-            $data['tins']['number'] = $this->taxId;
-        }
-        if(!empty($this->taxType)){
-            $data['tins']['tinType'] = $this->taxType;
+            $data['tins'] = [
+                "number" => $this->taxId,
+                "tinType" => $this->taxType ?? "BUSINESS_NATIONAL"
+            ];
         }
         return $data;
     }
