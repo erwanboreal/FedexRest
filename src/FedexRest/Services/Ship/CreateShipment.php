@@ -3,6 +3,7 @@
 namespace FedexRest\Services\Ship;
 
 use FedexRest\Entity\Item;
+use FedexRest\Services\Ship\Entity\DutiesPayment;
 use FedexRest\Services\Ship\Entity\Label;
 use FedexRest\Entity\Person;
 use FedexRest\Services\Ship\Entity\ShipmentSpecialServices;
@@ -31,6 +32,7 @@ class CreateShipment extends AbstractRequest
     protected string $labelResponseOptions = '';
     protected ShipmentSpecialServices $shipmentSpecialServices;
     protected ShippingChargesPayment $shippingChargesPayment;
+    protected ?DutiesPayment $dutiesPayment;
     protected string $mergeLabelDocOption = LabelDocOptionType::_LABELS_AND_DOCS;
     protected string $shipAction = '';
     protected string $processingOptionType = '';
@@ -288,11 +290,20 @@ class CreateShipment extends AbstractRequest
 
 
     /**
-     * @return \FedexRest\Services\Ship\Entity\ShippingChargesPayment
+     * @return ShippingChargesPayment
      */
     public function getShippingChargesPayment(): ShippingChargesPayment
     {
         return $this->shippingChargesPayment;
+    }
+
+    /**
+     * @param DutiesPayment  $dutiesPayment
+     * @return $this
+     */
+    public function setDutiesPayment(DutiesPayment $dutiesPayment): CreateShipment {
+        $this->dutiesPayment = $dutiesPayment;
+        return $this;
     }
 
     /**
@@ -610,9 +621,6 @@ class CreateShipment extends AbstractRequest
             'blockInsightVisibility' => $this->blockInsightVisibility,
             'requestedPackageLineItems' => $line_items,
         ];
-        if (!empty($this->shippingChargesPayment)) {
-            $data ['shippingChargesPayment'] = $this->shippingChargesPayment->prepare();
-        }
         if (!empty($this->label)) {
             $data ['labelSpecification'] = $this->label->prepare();
         }
@@ -642,7 +650,8 @@ class CreateShipment extends AbstractRequest
         }
         if(!empty($this->totalCustomsValue)) {
             $data['customsClearanceDetail']['totalCustomsValue'] = $this->totalCustomsValue->prepare();
-            $data['customsClearanceDetail']['dutiesPayment'] = ["paymentType" => "RECIPIENT"];
+            $data['customsClearanceDetail']['dutiesPayment'] =
+                ["paymentType" => !empty($this->dutiesPayment) ? $this->dutiesPayment : "RECIPIENT"];
             $data['customsClearanceDetail']['generatedDocumentLocale'] = "en_US";
         }
         if (!empty($this->broker)) {
