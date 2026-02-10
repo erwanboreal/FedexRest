@@ -15,6 +15,7 @@ class Pickup extends AbstractRequest {
     protected Person $sender;
     protected string $readyDatestamp = '';
     protected string $pickupType = '';
+    protected string $pickupDateType = '';
     protected string $carrierCode = '';
     protected string $customerCloseTime = '';
     protected string $countryRelationship = '';
@@ -37,6 +38,15 @@ class Pickup extends AbstractRequest {
      */
     public function setPickupType(string $pickupType): Pickup {
         $this->pickupType = $pickupType;
+        return $this;
+    }
+
+    /**
+     * @param string $pickupDateType
+     * @return $this
+     */
+    public function setPickupDateType(string $pickupDateType): Pickup {
+        $this->pickupDateType = $pickupDateType;
         return $this;
     }
 
@@ -157,6 +167,7 @@ class Pickup extends AbstractRequest {
                 'pickupLocation' => $this->sender->prepare(),
                 'readyDateTimestamp' => $this->readyDatestamp,
                 'customerCloseTime' => $this->customerCloseTime,
+                'pickupDateType' => $this->pickupDateType ?? "FUTURE_DAY"
             ],
             'carrierCode' => $this->carrierCode
         ];
