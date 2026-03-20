@@ -51,6 +51,7 @@ class CreateShipment extends AbstractRequest
     protected array $exportDetail;
     protected array $shippingDocs;
     protected array $expressFreightDetail;
+    protected array $emailNotificationDetail;
 
     /**
      * {@inheritDoc}
@@ -65,6 +66,15 @@ class CreateShipment extends AbstractRequest
      */
     public function setExpressFreightDetail(array $expressFreightDetail): CreateShipment {
         $this->expressFreightDetail = $expressFreightDetail;
+        return $this;
+    }
+
+    /**
+     * @param array $emailNotificationDetail
+     * @return $this
+     */
+    public function setEmailNotificationDetail(array $emailNotificationDetail): CreateShipment {
+        $this->emailNotificationDetail = $emailNotificationDetail;
         return $this;
     }
 
@@ -677,6 +687,9 @@ class CreateShipment extends AbstractRequest
         }
         if(!empty($this->expressFreightDetail)) {
             $data['expressFreightDetail'] = $this->expressFreightDetail;
+        }
+        if(!empty($this->emailNotificationDetail)) {
+            $data['emailNotificationDetail'] = $this->emailNotificationDetail;
         }
         return $data;
     }
