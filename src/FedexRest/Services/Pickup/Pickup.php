@@ -176,7 +176,7 @@ class Pickup extends AbstractRequest {
             $res['pickupType'] = $this->pickupType;
         }
         if(!empty($this->totalWeight)){
-            $res['totalWeight'] = $this->totalWeight;
+            $res['totalWeight'] = $this->totalWeight->prepare();
         }
         if(!empty($this->packageCount)){
             $res['packageCount'] = $this->packageCount;
