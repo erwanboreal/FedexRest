@@ -16,7 +16,7 @@ abstract class AbstractRequest implements RequestInterface
 
     public string $api_endpoint = '';
     protected string $access_token;
-    protected string $locale = 'fr_FR';
+    protected string $locale = 'en_US';
     protected Client $http_client;
     public string $content_type = 'application/json';
 
