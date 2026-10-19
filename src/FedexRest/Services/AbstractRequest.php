@@ -16,6 +16,7 @@ abstract class AbstractRequest implements RequestInterface
 
     public string $api_endpoint = '';
     protected string $access_token;
+    protected string $locale = 'fr_FR';
     protected Client $http_client;
     public string $content_type = 'application/json';
 
@@ -34,6 +35,16 @@ abstract class AbstractRequest implements RequestInterface
     public function setAccessToken(string $access_token)
     {
         $this->access_token = $access_token;
+        return $this;
+    }
+
+    /**
+     * @param string $locale
+     * @return $this
+     */
+    public function setLocale(string $locale): static
+    {
+        $this->locale = $locale;
         return $this;
     }
 
@@ -67,7 +78,7 @@ abstract class AbstractRequest implements RequestInterface
             'headers' => [
                 'Authorization' => "Bearer {$this->access_token}",
                 'Content-Type' => $this->content_type,
-                'X-locale' => 'fr_FR'
+                'X-locale' => $this->locale
             ],
         ]);
     }
